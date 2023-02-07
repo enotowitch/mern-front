@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '@mui/material/Button';
 
 import styles from './Header.module.scss';
@@ -6,10 +5,14 @@ import Container from '@mui/material/Container';
 
 import { Link } from "react-router-dom"
 
-export const Header = () => {
-	const isAuth = false;
+import React, { useContext } from 'react';
+import { Context } from '../../Context';
 
-	const onClickLogout = () => { };
+
+export const Header = () => {
+
+	const { user, logout } = useContext(Context)
+
 
 	return (
 		<div className={styles.root}>
@@ -19,12 +22,12 @@ export const Header = () => {
 						<div>ARCHAKOV BLOG</div>
 					</Link>
 					<div className={styles.buttons}>
-						{isAuth ? (
+						{user ? (
 							<>
 								<Link to="/posts/create">
 									<Button variant="contained">Написать статью</Button>
 								</Link>
-								<Button onClick={onClickLogout} variant="contained" color="error">
+								<Button onClick={logout} variant="contained" color="error">
 									Выйти
 								</Button>
 							</>
