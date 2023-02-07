@@ -35,12 +35,19 @@ function ContextProvider(props) {
 
 	function logout() {
 		userSet()
+		localStorage.removeItem("token")
+	}
+
+	async function register(value) {
+		const result = await axios.post("/register", value)
+		userSet(result.data)
+		result && localStorage.setItem("token", result.data.token) // todo
 	}
 
 
 	// ! RETURN
 	return (
-		<Context.Provider value={{ posts, postsSet, tags, tagsSet, login, logout, user }}>
+		<Context.Provider value={{ posts, postsSet, tags, tagsSet, login, register, logout, user }}>
 			{props.children}
 		</Context.Provider>
 	)

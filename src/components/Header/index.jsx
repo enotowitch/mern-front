@@ -12,14 +12,14 @@ import { Context } from '../../Context';
 export const Header = () => {
 
 	const { user, logout } = useContext(Context)
-
+	const userName = user && user.email
 
 	return (
 		<div className={styles.root}>
 			<Container maxWidth="lg">
 				<div className={styles.inner}>
 					<Link className={styles.logo} to="/">
-						<div>ARCHAKOV BLOG</div>
+						<div>{userName ? `HELLO, ${userName}` : `BLOG`}</div>
 					</Link>
 					<div className={styles.buttons}>
 						{user ? (
