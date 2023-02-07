@@ -24,7 +24,7 @@ export const Header = () => {
 					<div className={styles.buttons}>
 						{user ? (
 							<>
-								<Link to="/posts/create">
+								<Link to="/addpost">
 									<Button variant="contained">Написать статью</Button>
 								</Link>
 								<Button onClick={logout} variant="contained" color="error">
