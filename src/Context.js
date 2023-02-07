@@ -8,11 +8,14 @@ function ContextProvider(props) {
 	const [posts, postsSet] = useState([])
 	const [tags, tagsSet] = useState([])
 
-	useEffect(async () => {
-		const { data: dataPost } = await axios.get("/post")
-		const { data: dataTag } = await axios.get("/tags")
-		postsSet(dataPost)
-		tagsSet(dataTag)
+	useEffect(() => {
+		async function fetch() {
+			const { data: dataPost } = await axios.get("/post")
+			const { data: dataTag } = await axios.get("/tags")
+			postsSet(dataPost)
+			tagsSet(dataTag)
+		}
+		fetch()
 	}, [])
 
 	return (

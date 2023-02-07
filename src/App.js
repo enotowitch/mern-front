@@ -11,7 +11,7 @@ function App() {
 			<Container maxWidth="lg">
 				<Routes>
 					<Route exact path="/" element={<Home />} />
-					<Route exact path="/posts/create/:id" element={<FullPost />} />
+					<Route exact path="/posts/:id" element={<FullPost />} />
 					<Route exact path="/addpost" element={<AddPost />} />
 					<Route exact path="/login" element={<Login />} />
 					<Route exact path="/register" element={<Registration />} />
