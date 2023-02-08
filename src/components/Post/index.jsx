@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -11,6 +11,7 @@ import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 
 import { Link } from 'react-router-dom';
+import { Context } from '../../Context';
 
 
 export const Post = ({
@@ -27,11 +28,9 @@ export const Post = ({
 	isLoading,
 	isEditable,
 }) => {
-	if (isLoading) {
-		return <PostSkeleton />;
-	}
 
-	const onClickRemove = () => { };
+	const { removePost } = useContext(Context)
+
 
 	return (
 		<div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
@@ -42,7 +41,7 @@ export const Post = ({
 							<EditIcon />
 						</IconButton>
 					</Link>
-					<IconButton onClick={onClickRemove} color="secondary">
+					<IconButton onClick={() => removePost(_id)} color="secondary">
 						<DeleteIcon />
 					</IconButton>
 				</div>

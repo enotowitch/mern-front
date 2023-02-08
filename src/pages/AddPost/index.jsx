@@ -8,9 +8,9 @@ import styles from './AddPost.module.scss';
 
 import { Link } from 'react-router-dom';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from '../../axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 export const AddPost = () => {
@@ -18,11 +18,12 @@ export const AddPost = () => {
 	const fileRef = useRef(null)
 
 	const [imgUrl, imgUrlSet] = useState();
-	const [text, textSet] = React.useState('test text');
-	const [title, titleSet] = React.useState('TEST TITLE');
-	const [tags, tagsSet] = React.useState('tag 1, tag 2, tag 3');
+	const [text, textSet] = React.useState('');
+	const [title, titleSet] = React.useState('');
+	const [tags, tagsSet] = React.useState('');
 
 	const navigate = useNavigate()
+	const { id: updPostId } = useParams()
 
 	// ! handleChangeFile
 	const handleChangeFile = async (e) => {
@@ -41,11 +42,30 @@ export const AddPost = () => {
 			imgUrl,
 			text,
 			title,
-			tags: tags.split(",")
+			tags
 		}
-		const { data } = await axios.post("post", fields) // * create post
-		navigate(`/posts/${data._id}`)
+
+		if (updPostId) {
+			await axios.patch(`posts/${updPostId}/edit`, fields) // * update post
+			navigate(`/posts/${updPostId}`)
+		} else {
+			const { data } = await axios.post("post", fields) // * create post
+			navigate(`/posts/${data._id}`)
+		}
+
 	}
+
+	// ! insert data from original post to updating post
+	useEffect(() => {
+		async function fetchPostToUpdate() {
+			const { data } = await axios.get(`posts/${updPostId}`)
+			imgUrlSet(data.imgUrl)
+			textSet(data.text)
+			titleSet(data.title)
+			tagsSet(data.tags)
+		}
+		fetchPostToUpdate()
+	}, [])
 
 	const onClickRemoveImage = () => { };
 
